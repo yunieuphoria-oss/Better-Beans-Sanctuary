@@ -118,34 +118,41 @@
     <main x-show="userRole !== 'admin'">
 
         <!-- HERO SECTION -->
-        <section id="home" class="py-24 px-6 bg-gradient-to-b from-cream-100 to-cream-200 text-center border-b border-cream-200">
-            <div class="max-w-4xl mx-auto space-y-6">
-                <span class="text-xs font-semibold tracking-widest uppercase text-pastel-brown bg-khaki-light/30 px-4 py-1.5 rounded-full inline-block">
+        <section id="home" class="relative min-h-[80vh] flex items-center justify-center py-24 px-6 text-center border-b border-cream-200 overflow-hidden">
+            
+            <!-- GIF Background Layer with Soft Dark Overlay -->
+            <div class="absolute inset-0 bg-cover bg-center z-0" 
+                 style="background-image: linear-gradient(rgba(28, 25, 23, 0.65), rgba(28, 25, 23, 0.65)), url('coffee_barista.gif');">
+            </div>
+
+            <!-- Content Container (Elevated above background via z-10) -->
+            <div class="relative z-10 max-w-4xl mx-auto space-y-6">
+                <span class="text-xs font-semibold tracking-widest uppercase text-cream-100 bg-cream-50/20 backdrop-blur-sm px-4 py-1.5 rounded-full inline-block border border-cream-100/30">
                     Micro-Lot Speciality Roastery
                 </span>
-                <h1 class="text-5xl md:text-7xl font-serif text-cream-900 font-normal leading-tight">
-                    Mindanao’s Highest Peak, <br><span class="italic text-pastel-brown">Crafted for Quiet Rituals</span>
+                <h1 class="text-5xl md:text-7xl font-serif text-cream-50 font-normal leading-tight">
+                    Mindanao’s Highest Peak, <br><span class="italic text-cream-200">Crafted for Quiet Rituals</span>
                 </h1>
-                <p class="text-cream-800 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                <p class="text-cream-100/90 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
                     Sourced directly from indigenous smallholder coffee farmers on Mt. Apo and Mt. Kitanglad. Slow-roasted in Ecoland, Davao City.
                 </p>
                 <div class="pt-4 flex flex-wrap justify-center gap-4">
                     <a href="#beans" class="px-8 py-3.5 rounded-full bg-pastel-brown text-cream-50 font-medium text-sm hover:bg-pastel-brown/90 transition-all shadow-md">
                         Shop Single Origins
                     </a>
-                    <a href="#menu" class="px-8 py-3.5 rounded-full bg-cream-50 border border-khaki text-cream-900 font-medium text-sm hover:bg-cream-200 transition-all">
+                    <a href="#menu" class="px-8 py-3.5 rounded-full bg-cream-50/90 backdrop-blur-sm border border-khaki text-cream-900 font-medium text-sm hover:bg-cream-100 transition-all">
                         View Cafe Beverage Menu
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- SINGLE ORIGIN BEANS SECTION (WITH IMAGES) -->
+        <!-- SINGLE ORIGIN BEANS SECTION -->
         <section id="beans" class="py-20 px-6 max-w-7xl mx-auto space-y-12">
             <div class="text-center space-y-3">
                 <span class="text-xs font-bold uppercase tracking-widest text-pastel-brown">Whole Bean Collection</span>
                 <h2 class="text-4xl font-serif text-cream-900">Mindanao Single-Origin Harvests</h2>
-                <p class="text-cream-800 text-sm max-w-xl mx-auto">Roasted weekly in small batches at our Ecoland facility. Priced in Philippine Pesos (₱).</p>
+                <p class="text-cream-800 text-sm max-w-xl mx-auto">Roasted weekly in small batches at our Ecoland Branch.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -153,7 +160,7 @@
                     <div class="bg-cream-50 border border-cream-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition-all group overflow-hidden">
                         <div class="space-y-4">
                             <div class="h-56 rounded-xl bg-cream-200 overflow-hidden relative border border-khaki/20">
-                                <img :src="bean.img" :alt="bean.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img :src="bean.img" :alt="bean.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                                 <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-cream-50/95 backdrop-blur-md text-[10px] uppercase font-bold tracking-wider text-pastel-brown border border-khaki/30" x-text="bean.origin"></span>
                             </div>
                             <h3 class="text-2xl font-serif text-cream-900" x-text="bean.name"></h3>
@@ -167,7 +174,7 @@
                         <div class="pt-6 mt-6 border-t border-cream-200 flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-cream-800 block uppercase font-semibold">250g Bag</span>
-                                <span class="text-xl font-serif font-semibold text-pastel-brown" x-text="'₱' + bean.price.toLocaleString()"></span>
+                                <span class="text-xl font-serif font-semibold text-pastel-brown" x-text="'₱' + Number(bean.price).toLocaleString()"></span>
                             </div>
                             <button @click="addToCart(bean)" :disabled="!bean.inStock" :class="bean.inStock ? 'bg-khaki-light/50 hover:bg-pastel-brown hover:text-cream-50 text-cream-900' : 'bg-gray-200 text-gray-400 cursor-not-allowed'" class="px-5 py-2.5 rounded-full font-semibold text-xs tracking-wider uppercase transition-all" x-text="bean.inStock ? 'Add to Cart' : 'Out of Stock'">
                             </button>
@@ -177,11 +184,11 @@
             </div>
         </section>
 
-        <!-- CAFE MENU SECTION (WITH IMAGES) -->
+        <!-- CAFE MENU SECTION -->
         <section id="menu" class="py-20 px-6 bg-cream-200/50 border-t border-b border-cream-200">
             <div class="max-w-7xl mx-auto space-y-12">
                 <div class="text-center space-y-3">
-                    <span class="text-xs font-bold uppercase tracking-widest text-pastel-brown">Ecoland Barista Bar</span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-pastel-brown">Barista Bar</span>
                     <h2 class="text-4xl font-serif text-cream-900">Handcrafted Beverages</h2>
                     <p class="text-cream-800 text-sm">Prepared fresh at our cafe with local dairy and organic palm sugar.</p>
                 </div>
@@ -191,12 +198,12 @@
                         <div class="bg-cream-50 border border-cream-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-md transition-all group overflow-hidden">
                             <div class="space-y-4">
                                 <div class="h-48 rounded-xl bg-cream-200 overflow-hidden relative border border-khaki/20">
-                                    <img :src="drink.img" :alt="drink.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <img :src="drink.img" :alt="drink.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                                     <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-cream-50/95 backdrop-blur-md text-[9px] uppercase font-bold tracking-wider text-khaki-dark border border-khaki/30" x-text="drink.category"></span>
                                 </div>
                                 <div class="flex justify-between items-start">
                                     <h3 class="text-xl font-serif text-cream-900 font-medium" x-text="drink.name"></h3>
-                                    <span class="text-lg font-serif font-semibold text-pastel-brown" x-text="'₱' + drink.price.toLocaleString()"></span>
+                                    <span class="text-lg font-serif font-semibold text-pastel-brown" x-text="'₱' + Number(drink.price).toLocaleString()"></span>
                                 </div>
                                 <p class="text-xs text-cream-800 leading-relaxed" x-text="drink.description"></p>
                             </div>
@@ -214,7 +221,7 @@
         <!-- ABOUT US SECTION -->
         <section id="about" class="py-24 px-6 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div class="space-y-6">
-                <span class="text-xs font-bold uppercase tracking-widest text-pastel-brown">Our Ecoland Sanctuary</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-pastel-brown">Our Sanctuary</span>
                 <h2 class="text-4xl font-serif text-cream-900 leading-tight">Rooted in Sustainable Mindanao Sourcing</h2>
                 <p class="text-cream-800 text-sm leading-relaxed">
                     Better Beans Co. began in Ecoland, Davao City with a commitment to elevate Philippine coffee. We partner directly with smallholder farmers around Mt. Apo, ensuring ethical compensation and highlighting the rich micro-climates of southern Mindanao.
@@ -239,13 +246,13 @@
             </div>
         </section>
 
-        <!-- WHERE TO FIND US SECTION (Positioned Below About Us) -->
+        <!-- WHERE TO FIND US SECTION -->
         <section id="location" class="py-20 px-6 bg-cream-200/60 border-t border-b border-cream-200">
             <div class="max-w-7xl mx-auto space-y-12">
                 <div class="text-center space-y-3">
                     <span class="text-xs font-bold uppercase tracking-widest text-pastel-brown">Visit Our Roastery</span>
                     <h2 class="text-4xl font-serif text-cream-900">Where to Find Us</h2>
-                    <p class="text-cream-800 text-sm max-w-xl mx-auto">Located in the heart of Kabacan Ecoland, Davao City. Drop by for fresh pour-overs or whole bean pick-ups.</p>
+                    <p class="text-cream-800 text-sm max-w-xl mx-auto">Located in the heart of Ecoland, Davao City. Drop by for fresh pour-overs or whole bean pick-ups.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -254,16 +261,16 @@
                         <div class="space-y-6">
                             <div class="space-y-2">
                                 <span class="text-[10px] font-bold uppercase tracking-widest text-pastel-brown"> Address</span>
-                                <h3 class="text-2xl font-serif text-cream-900">Better Beans Co.</h3>
+                                <h3 class="text-2xl font-serif text-cream-900">Better Beans Co. </h3>
                                 <p class="text-xs text-cream-800 leading-relaxed">
-                                    32 Kabacan st, Ecoland, Davao City,<br>
+                                   32 Kabacan st, Ecoland <br>
                                     8000 Davao del Sur, Philippines
                                 </p>
                             </div>
 
                             <div class="space-y-2 pt-4 border-t border-cream-200">
                                 <span class="text-[10px] font-bold uppercase tracking-widest text-pastel-brown">Cafe Hours</span>
-                                <p class="text-xs text-cream-900 font-semibold">Monday – Friday</p>
+                                <p class="text-xs text-cream-900 font-semibold">Monday – Sunday</p>
                                 <p class="text-xs text-cream-800">10:30 AM – 07:30 PM</p>
                             </div>
 
@@ -281,26 +288,25 @@
 
                     <!-- Map & Location Visual Picture Container -->
                     <div class="lg:col-span-7 bg-cream-50 border border-cream-200 rounded-3xl p-4 flex flex-col space-y-4 shadow-sm overflow-hidden">
-                        <!-- Embedded Interactive Location Map / Visual Viewport -->
                         <div class="relative w-full h-72 md:h-80 rounded-2xl overflow-hidden bg-cream-200 border border-khaki/20">
                             <iframe 
                                 title="Better Beans Co. Ecoland Location Map"
                                 class="w-full h-full border-0"
                                 loading="lazy"
                                 allowfullscreen
-                                referrerpolicy="no-referrer-when-downgrade"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15838.077673238612!2d125.5947!3d7.0658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f96d6342617f19%3A0xb3551532859944c6!2sEcoland%2C%20Davao%20City%2C%20Davao%20del%20Sur!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph">
+                                referrerpolicy="strict-origin-when-cross-origin"
+                               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.665!2d125.6010!3d7.0485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f97360a6e201bd%3A0x7c8a405ab6c543e5!2sBetter%20Beans%20Co.%20(Kabacan%20Branch)!5e0!3m2!1sen!2sph!4v1700000000000">
                             </iframe>
                             <div class="absolute bottom-3 left-3 bg-cream-50/90 backdrop-blur-md px-3 py-1.5 rounded-lg border border-khaki/30 text-[10px] font-bold text-cream-900 shadow-sm">
                                 📍 Ecoland Roastery Pin
                             </div>
                         </div>
 
-                        <!-- Picture Preview of the Location -->
                         <div class="relative w-full h-44 rounded-2xl overflow-hidden bg-khaki-light/30 border border-khaki/20 flex items-center justify-between p-6">
                             <div class="space-y-1 relative z-10 max-w-xs">
                                 <span class="text-[10px] font-bold uppercase tracking-widest text-pastel-brown">Ecoland Storefront</span>
                                 <h4 class="font-serif text-lg text-cream-900 font-bold">Better Beans Co. Cafe</h4>
+                                <p class="text-[11px] text-cream-800"> 32 Kabacan st, Ecoland Streetfront Entrance</p>
                             </div>
                             <div class="w-24 h-24 rounded-xl bg-cream-200 border border-khaki/40 flex flex-col items-center justify-center text-center p-2 relative z-10 shadow-inner">
                                 <span class="text-3xl">☕</span>
@@ -313,12 +319,11 @@
         </section>
     </main>
 
-    <!-- EXPANDED ADMIN MANAGEMENT CONSOLE (Role Restricted) -->
+    <!-- ADMIN MANAGEMENT SUITE -->
     <section x-show="userRole === 'admin'" class="py-12 px-6 max-w-7xl mx-auto space-y-10" x-cloak>
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-khaki/30">
             <div>
-                <span class="text-xs font-bold uppercase tracking-widest text-pastel-brown">Ecoland Management Suite</span>
-                <h1 class="text-4xl font-serif text-cream-900">Executive Control Panel</h1>
+                <span class="text-xs font-bold uppercase tracking-widest text-pastel-brown"> Admin Suite</span>
             </div>
             <div class="flex items-center gap-3">
                 <button @click="setAdminTab('analytics')" :class="adminView === 'analytics' ? 'bg-pastel-brown text-cream-50' : 'bg-cream-200 text-cream-900'" class="px-4 py-2 rounded-full text-xs font-bold transition-all">Overview Metrics</button>
@@ -347,7 +352,7 @@
                     <span class="text-[10px] text-cream-800 block">Single Origin + Beverage</span>
                 </div>
                 <div class="p-6 bg-cream-50 border border-cream-200 rounded-2xl shadow-sm space-y-2">
-                    <span class="text-[10px] uppercase font-bold text-cream-800 tracking-wider">Ecoland Stock Level</span>
+                    <span class="text-[10px] uppercase font-bold text-cream-800 tracking-wider"> Stock Level</span>
                     <span class="text-3xl font-serif font-bold text-emerald-700">92%</span>
                     <span class="text-[10px] text-emerald-600 block">Fresh Mt. Apo Batch</span>
                 </div>
@@ -393,7 +398,7 @@
                                 <td class="p-4 font-mono font-bold text-pastel-brown" x-text="order.id"></td>
                                 <td class="p-4 font-semibold text-cream-900" x-text="order.customer"></td>
                                 <td class="p-4 text-cream-800" x-text="order.summary"></td>
-                                <td class="p-4 font-serif font-bold text-cream-900" x-text="'₱' + order.total.toLocaleString()"></td>
+                                <td class="p-4 font-serif font-bold text-cream-900" x-text="'₱' + Number(order.total).toLocaleString()"></td>
                                 <td class="p-4">
                                     <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase"
                                         :class="{
@@ -443,7 +448,7 @@
                         </div>
                         <div class="flex items-center gap-3 pt-2">
                             <label class="text-xs text-cream-800 font-semibold">Price (₱):</label>
-                            <input type="number" x-model.number="item.price" class="w-24 px-3 py-1 rounded-lg border border-cream-200 bg-cream-100 text-xs font-bold text-cream-900">
+                            <input type="number" x-model.number="item.price" @input="saveToStorage()" class="w-24 px-3 py-1 rounded-lg border border-cream-200 bg-cream-100 text-xs font-bold text-cream-900">
                         </div>
                     </div>
                 </template>
@@ -477,10 +482,10 @@
                 <p class="text-cream-800 leading-relaxed">Artisanal specialty micro-roastery based in Ecoland, Davao City. Dedicated to sustainable sourcing from Mt. Apo smallholder coffee farmers.</p>
             </div>
             <div class="space-y-2">
-                <h4 class="font-serif font-bold text-sm text-cream-900">Ecoland Roastery Location</h4>
-                <p class="text-cream-800">32 Kabacan st, Ecoland</p>
+                <h4 class="font-serif font-bold text-sm text-cream-900">Location</h4>
+                <p class="text-cream-800"> 32 Kabacan st, Ecoland</p>
                 <p class="text-cream-800">Davao City, 8000 Philippines</p>
-                <p class="text-pastel-brown font-bold pt-1">Open Daily: 10:30 AM – 07:30 PM</p>
+                <p class="text-pastel-brown font-bold pt-1">Open Weekdays: 10:30 AM – 07:30 PM</p>
             </div>
             <div class="space-y-2">
                 <h4 class="font-serif font-bold text-sm text-cream-900">Contact & Orders</h4>
@@ -489,7 +494,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto pt-10 mt-10 border-t border-cream-300/50 text-center text-cream-800">
-            &copy; 2026 Better Beans Co. Ecoland Davao City. Midterm Laboratory Presentation.
+            &copy; 2026 Better Beans Co. Ecoland Davao City. Academic Project Presentation.
         </div>
     </footer>
 
@@ -557,19 +562,25 @@
                 <div class="space-y-6">
                     <div class="flex items-center justify-between pb-4 border-b border-cream-200">
                         <h3 class="font-serif text-2xl text-cream-900">Your Cart</h3>
-                        <button @click="cartOpen = false" class="text-cream-800 hover:text-cream-900 text-lg">✕</button>
+                        <button @click="cartOpen = false" class="text-cream-800 hover:text-cream-900 text-lg font-bold">✕</button>
                     </div>
 
-                    <div class="space-y-4 max-h-[50vh] overflow-y-auto">
+                    <div class="space-y-4 max-h-[55vh] overflow-y-auto pr-1">
                         <template x-for="item in cart" :key="item.id">
                             <div class="flex items-center justify-between bg-cream-100 p-4 rounded-xl border border-cream-200">
-                                <div>
+                                <div class="space-y-1">
                                     <h4 class="font-serif text-cream-900 font-bold text-sm" x-text="item.name"></h4>
-                                    <span class="text-xs text-pastel-brown font-semibold" x-text="'₱' + item.price.toLocaleString()"></span>
+                                    <span class="text-xs text-pastel-brown font-semibold block" x-text="'₱' + (item.price * item.qty).toLocaleString()"></span>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="text-xs text-cream-800" x-text="'Qty: ' + item.qty"></span>
-                                    <button @click="removeFromCart(item.id)" class="text-red-500 text-xs">Remove</button>
+                                    <!-- Quantity Adjuster -->
+                                    <div class="flex items-center bg-cream-50 border border-khaki/30 rounded-full px-2 py-1 gap-2">
+                                        <button @click="updateCartQty(item.id, -1)" class="w-5 h-5 rounded-full bg-cream-200 hover:bg-khaki-light text-cream-900 font-bold text-xs flex items-center justify-center transition-all">-</button>
+                                        <span class="text-xs font-bold text-cream-900 w-4 text-center" x-text="item.qty"></span>
+                                        <button @click="updateCartQty(item.id, 1)" class="w-5 h-5 rounded-full bg-cream-200 hover:bg-khaki-light text-cream-900 font-bold text-xs flex items-center justify-center transition-all">+</button>
+                                    </div>
+                                    <!-- Delete Item Button -->
+                                    <button @click="removeFromCart(item.id)" class="text-red-500 hover:text-red-700 text-xs font-bold p-1" title="Remove item">✕</button>
                                 </div>
                             </div>
                         </template>
@@ -584,7 +595,7 @@
                         <span>Total:</span>
                         <span class="text-pastel-brown" x-text="'₱' + cartTotal.toLocaleString()"></span>
                     </div>
-                    <button @click="checkout()" class="w-full py-3.5 rounded-full bg-pastel-brown text-cream-50 font-bold text-xs uppercase tracking-wider hover:bg-pastel-brown/90 transition-all">
+                    <button @click="checkout()" :disabled="cart.length === 0" :class="cart.length > 0 ? 'bg-pastel-brown hover:bg-pastel-brown/90 text-cream-50' : 'bg-gray-300 text-gray-500 cursor-not-allowed'" class="w-full py-3.5 rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-sm">
                         Checkout Order
                     </button>
                 </div>
@@ -597,15 +608,13 @@
         <div @click="receiptModalOpen = false" class="absolute inset-0 bg-cream-900/50 backdrop-blur-sm"></div>
         <div class="relative bg-cream-50 border border-khaki rounded-3xl p-8 max-w-sm w-full shadow-2xl space-y-6 z-10 text-center font-mono text-xs">
             
-            <!-- Receipt Header -->
             <div class="space-y-1 pb-4 border-b border-dashed border-cream-300">
                 <div class="w-10 h-10 rounded-full bg-khaki/20 border border-khaki mx-auto flex items-center justify-center text-pastel-brown font-serif text-lg font-bold mb-2">B</div>
                 <h3 class="font-serif text-xl font-bold text-cream-900">BETTER BEANS CO.</h3>
-                <p class="text-[10px] text-cream-800">32 st Bucana, Ecoland, Davao City</p>
+                <p class="text-[10px] text-cream-800">32 Kabacan Street, Ecoland, Davao City</p>
                 <p class="text-[10px] text-cream-800">TIN: 482-901-332-000 • Non-VAT Registered</p>
             </div>
 
-            <!-- Order Meta -->
             <div class="text-left space-y-1 text-[11px] pb-3 border-b border-dashed border-cream-300 text-cream-800">
                 <div class="flex justify-between"><span>Receipt No:</span><span class="font-bold text-pastel-brown" x-text="activeReceipt?.id"></span></div>
                 <div class="flex justify-between"><span>Date:</span><span x-text="activeReceipt?.date"></span></div>
@@ -613,7 +622,6 @@
                 <div class="flex justify-between"><span>Pay Method:</span><span>GCash / Store Pickup</span></div>
             </div>
 
-            <!-- Purchased Item List -->
             <div class="space-y-2 text-left py-2">
                 <template x-for="item in activeReceipt?.items" :key="item.id">
                     <div class="flex justify-between text-cream-900">
@@ -623,14 +631,12 @@
                 </template>
             </div>
 
-            <!-- Totals Breakdown -->
             <div class="pt-4 border-t border-dashed border-cream-300 space-y-1 text-left text-[11px]">
                 <div class="flex justify-between text-cream-800"><span>Subtotal:</span><span x-text="'₱' + activeReceipt?.subtotal.toLocaleString()"></span></div>
-                <div class="flex justify-between text-cream-800"><span>Inclusive 12% VAT:</span><span x-text="'₱' + activeReceipt?.vat.toFixed(2)"></span></div>
+                <div class="flex justify-between text-cream-800"><span>Inclusive 12% VAT:</span><span x-text="'₱' + Number(activeReceipt?.vat).toFixed(2)"></span></div>
                 <div class="flex justify-between font-serif text-base font-bold text-pastel-brown pt-2"><span>Total Paid:</span><span x-text="'₱' + activeReceipt?.grandTotal.toLocaleString()"></span></div>
             </div>
 
-            <!-- Footer Message & Print Button -->
             <div class="pt-4 border-t border-dashed border-cream-300 space-y-3">
                 <p class="text-[10px] text-cream-800 italic">"Thank you for supporting smallholder Mindanao farmers in Ecoland!"</p>
                 <button @click="window.print()" class="w-full py-2.5 rounded-full bg-cream-200 text-cream-900 font-bold text-[10px] uppercase tracking-wider hover:bg-khaki-light transition-all">
@@ -645,5 +651,50 @@
 
     <!-- Application Script -->
     <script src="app.js"></script>
+    <!-- ========================================== -->
+    <!-- AMBIANCE AUDIO PLAYER & TOGGLE BUTTON      -->
+    <!-- ========================================== -->
+
+    <!-- Hidden YouTube Audio Engine -->
+    <div class="hidden">
+        <iframe id="youtubeAmbiance" 
+                width="200" 
+                height="100" 
+                src="https://www.youtube.com/embed/MYPVQccHhAQ?enablejsapi=1&autoplay=0&loop=1&playlist=MYPVQccHhAQ" 
+                allow="autoplay">
+        </iframe>
+    </div>
+
+    <!-- Floating Audio Control Button -->
+    <button onclick="toggleYouTubeAmbiance()" 
+            id="musicBtn"
+            type="button"
+            class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-full bg-stone-900/90 text-cream-100 text-xs font-medium backdrop-blur-md border border-cream-200/20 shadow-2xl flex items-center gap-2 hover:bg-stone-800 transition-all cursor-pointer">
+        <span class="animate-pulse">☕</span>
+        <span id="musicText">Play Cafe Ambiance</span>
+    </button>
+
+    <script>
+    let isPlaying = false;
+    function toggleYouTubeAmbiance() {
+        const iframe = document.getElementById('youtubeAmbiance');
+        const text = document.getElementById('musicText');
+        const btn = document.getElementById('musicBtn');
+
+        const command = isPlaying ? '{"event":"command","func":"pauseVideo","args":""}' : '{"event":"command","func":"playVideo","args":""}';
+        iframe.contentWindow.postMessage(command, '*');
+
+        if (isPlaying) {
+            text.innerText = 'Play Cafe Ambiance';
+            btn.classList.remove('border-khaki', 'text-cream-50');
+            isPlaying = false;
+        } else {
+            text.innerText = 'Pause Cafe Ambiance';
+            btn.classList.add('border-khaki', 'text-cream-50');
+            isPlaying = true;
+        }
+    }
+    </script>
+
 </body>
 </html>
